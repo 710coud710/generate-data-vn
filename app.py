@@ -4,16 +4,19 @@ from faker import Faker
 import random
 import json
 import unidecode
-
+import os
 app = Flask(__name__)
 CORS(app)
 
 fake = Faker("vi_VN")  
 
 
-def load_names(file_path):
+def load_file(filename):  # Đảm bảo tham số filename được truyền vào
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Lấy đường dẫn thư mục hiện tại
+    file_path = os.path.join(base_dir, "data", filename)  # Ghép với thư mục data
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
+    
 def get_random_name(gender):
     return random.choice(male_names if gender == "Nam" else female_names)
 
@@ -36,9 +39,9 @@ def generate_vietnam_phone():
     return f"{prefix}{number}"  # Ghép thành số hoàn chỉnh
 
 
-male_names = load_names("nam.json")
-female_names = load_names("nu.json")
-locations = load_locations()
+male_names = load_file("nam.json")
+female_names = load_file("nu.json")
+locations = load_file("locations.json")
 
 def generate_fake_data():
     gender = random.choice(["Nam", "Nữ"])
@@ -70,6 +73,11 @@ def home():
 @app.route("/api/random-user", methods=["GET"])
 def get_random_user():
     return jsonify(generate_fake_data())
+
+@app.route("/api/all-users", methods=["GET"])
+def get_all_users():
+    num_users = 10
+    return jsonify([generate_fake_data() for _ in range(num_users)])
 
 if __name__ == "__main__":
     app.run(debug=True)
