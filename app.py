@@ -47,7 +47,7 @@ def generate_fake_data():
     gender = random.choice(["Nam", "Nữ"])
     full_name = get_random_name(gender)
     email = f"{unidecode.unidecode(full_name).lower()}@gmail.com".replace(" ", "")
-    
+    username = unidecode.unidecode(full_name).lower().replace(" ", "")
     cccd = "".join([str(random.randint(0, 9)) for _ in range(12)])  # Sinh CCCD 12 số hợp lệ
     address, province, district, ward = get_random_address() 
     data = {
@@ -65,7 +65,9 @@ def generate_fake_data():
         "province": province,
         "district": district,
         "ward": ward,
-        "facebook_link": f"https://facebook.com/{unidecode.unidecode(full_name).replace(' ', '').lower()}",
+        # "facebook_link": f"https://facebook.com/{unidecode.unidecode(full_name).replace(' ', '').lower()}",
+        "facebook": f"https://www.facebook.com/{username}",
+        "username": f"{username}{random.randint(1, 99)}",
     }
     return data
 
