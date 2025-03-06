@@ -12,6 +12,10 @@ function fetchRandomUser() {
             document.getElementById("address").textContent = data.address;
             document.getElementById("job").textContent = data.job;
             document.getElementById("nationality").textContent = data.nationality;
+            document.getElementById("company").innerText = data.company;
+            document.getElementById("salary").innerText = data.salary;
+            document.getElementById("cccd_issue_place").innerText = data.cccd_issue_place;
+            document.getElementById("facebook_link").href = data.facebook_link;
         })
         .catch(error => {
             console.error("Lỗi khi lấy dữ liệu:", error);

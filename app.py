@@ -60,9 +60,12 @@ def generate_fake_data():
         "cccd": cccd,
         "job": fake.job(),
         "nationality": "Việt Nam",
+        "company": fake.company(),
+        "salary": f"{random.randint(8, 50)} triệu VND",
         "province": province,
         "district": district,
-        "ward": ward
+        "ward": ward,
+        "facebook_link": f"https://facebook.com/{unidecode.unidecode(full_name).replace(' ', '').lower()}",
     }
     return data
 
@@ -75,5 +78,6 @@ def get_random_user():
     return jsonify(generate_fake_data())
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000)) 
-    app.run(host="0.0.0.0", port=port, debug=False) 
+    # port = int(os.environ.get("PORT", 5000)) 
+    # app.run(host="0.0.0.0", port=port, debug=True) 
+    app.run(host="0.0.0.0", port=5000, debug=True)
